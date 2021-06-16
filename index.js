@@ -1,4 +1,4 @@
-import appendViaIndex from "./scripts/appendViaIndex.js";
+import createAppendImageBy from "./scripts/createAppendImageBy.js";
 import setUpImages from "./scripts/fetchImages.js";
 import setUpMqls from "./scripts/setUpMqls.js";
 
@@ -8,9 +8,11 @@ const mqlQueries = [
   "(min-width: 1200px)",
 ];
 
-setUpImages(appendViaIndex);
+const appendImageByHeight = createAppendImageBy("height");
+
+setUpImages(appendImageByHeight);
 
 setUpMqls(
   { mqlQueries, columnQuery: ".column", imageQuery: "img" },
-  appendViaIndex
+  appendImageByHeight
 );
