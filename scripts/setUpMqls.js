@@ -1,8 +1,14 @@
+import columns from "./Columns.js";
+
 export default function setUpMqls(queries, handleShuffle) {
   const handleQueryChange = createHandleQueryChange(queries, handleShuffle);
   const mqls = createMediaQueryLists(queries.mqlQueries);
   mqls.forEach((mql, index) => {
     mql.addEventListener("change", () => handleQueryChange(mql, index));
+
+    if (mql.matches) {
+      handleQueryChange(mql, index);
+    }
   });
 }
 
@@ -11,20 +17,27 @@ function createMediaQueryLists(queries) {
 }
 
 function createHandleQueryChange(queries, handleShuffle) {
-  const { columnQuery, imageQuery } = queries;
+  const { imageQuery } = queries;
   return (mql, index) => {
     if (mql.matches) {
-      const columns = document.querySelectorAll(columnQuery);
       const images = document.querySelectorAll(imageQuery);
-
-      setColumnClasses(columns, index);
+      setColumnStates(index);
       handleShuffle(images);
+      setGridColumns(index + 1);
     }
   };
 }
 
-function setColumnClasses(columns, index) {
-  columns.forEach((column, cIndex) =>
-    column.classList[cIndex > index ? "add" : "remove"]("hidden")
+function setGridColumns(numberOfVisibleColumns) {
+  document
+    .querySelector("[data-maisonry='wrapper']")
+    .style.setProperty("--columns", numberOfVisibleColumns);
+}
+
+function setColumnStates(index) {
+  const allColumns = columns.getAll();
+
+  allColumns.forEach((_column, cindex) =>
+    columns.setStateOf(cindex, cindex > index)
   );
 }
