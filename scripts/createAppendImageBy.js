@@ -76,6 +76,6 @@ function setUpLoadPromise(imageElement) {
 }
 
 export function appendImageTo(image, index) {
-  const column = columns.getOne(index);
+  const column = columns.getNth(index);
   column.appendChild(image);
 }

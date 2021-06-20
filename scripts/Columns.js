@@ -23,7 +23,7 @@ function getColumn(index = 0) {
 
 class Columns {
   constructor() {}
-  getOne = getColumn;
+  getNth = getColumn;
   getNthVisible = (index) => getVisibleColumns()[index];
   getNthHidden = (index) => getHiddenColumns()[index];
   getAll = getAllColumns;
